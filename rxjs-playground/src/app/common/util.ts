@@ -1,4 +1,9 @@
-import {Observable} from 'rxjs';
+import {Observable, of, throwError} from 'rxjs';
+import {getFakeTheaterById, getTheaterById} from "../../../server/get-theater.route";
+import {delay} from "rxjs/operators";
+import {fakeSearchMovie} from "../../../server/search-movie.route";
+import {Request, Response} from "express";
+import {THEATER} from "../../../server/db-data";
 
 
 export function createHttpObservable(url: string): Observable<any> {
@@ -33,5 +38,26 @@ export function createHttpObservable(url: string): Observable<any> {
 
 
   });
+}
+
+export function getFakeUrlTheaterRequest(id: string): Observable<any> {
+  let fakeResponse = getFakeTheaterById(id);
+  return of(fakeResponse).pipe(delay(200))
+}
+
+export function getFakeUrlMovieSearchRequest(filter: string): Observable<any> {
+  let fakeResponse = fakeSearchMovie(filter);
+  return of(fakeResponse).pipe(delay(1000))
+}
+
+export function getFakeTheaterWithFailureRate() {
+
+  const error = (Math.random() >= 0.5);
+
+  if (error) {
+    return throwError("error");
+  } else {
+    return of(Object.values(THEATER)).pipe(delay(200));
+  }
 }
 

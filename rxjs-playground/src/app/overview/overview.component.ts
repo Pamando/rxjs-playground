@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {fromEvent, Observable} from "rxjs";
 import {ActivatedRoute} from "@angular/router";
-import {createHttpObservable} from "../common/util";
+import {createHttpObservable, getFakeUrlMovieSearchRequest, getFakeUrlTheaterRequest} from "../common/util";
 import {debounceTime, distinctUntilChanged, map, startWith, switchMap} from "rxjs/operators";
 import {Movie} from "../model/movie";
 import {Theater} from "../model/theater";
@@ -29,7 +29,7 @@ export class OverviewComponent implements OnInit, AfterViewInit {
 
     this.theaterId = '0';
 
-    createHttpObservable(`/api/theater/${this.theaterId}`).subscribe(theater => {
+    getFakeUrlTheaterRequest(this.theaterId).subscribe(theater => {
       this.theater = theater
       this.loadMovies().subscribe(movies => {
         this.movies = movies;
@@ -42,11 +42,7 @@ export class OverviewComponent implements OnInit, AfterViewInit {
   }
 
   loadMovies(search = ''): Observable<Movie[]> {
-    return createHttpObservable(
-      `/api/searchMovie?theaterId=${this.theaterId}&pageSize=100&filter=${search}`)
-      .pipe(
-        map(res => res["payload"])
-      );
+    return getFakeUrlMovieSearchRequest(search);
   }
 
 }

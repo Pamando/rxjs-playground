@@ -3,7 +3,6 @@
 
 import {Request, Response} from 'express';
 import {MOVIES} from "./db-data";
-import {setTimeout} from "timers";
 
 
 
@@ -34,4 +33,14 @@ export function searchMovie(req: Request, res: Response) {
     },1000);
 
 
+}
+
+export function fakeSearchMovie(req: string) {
+
+    let movies = Object.values(MOVIES);
+    if (req) {
+      movies = movies.filter(movie => movie.description.trim().toLowerCase().search(req.toLowerCase()) >= 0);
+    }
+
+    return movies;
 }

@@ -9,6 +9,7 @@ export function getAllTheater(req: Request, res: Response) {
   }, 200);
 }
 
+
 export function getTheaterWithFailureRate(req: Request, res: Response) {
 
   const error = (Math.random() >= 0.5);
@@ -22,13 +23,20 @@ export function getTheaterWithFailureRate(req: Request, res: Response) {
   }
 }
 
-
 export function getTheaterById(req: Request, res: Response) {
 
   const movieId = req.params["id"];
   const theaters: any = Object.values(THEATER);
   const theater = theaters.find(theater => theater.id == movieId);
   res.status(200).json(theater);
+}
+
+export function getFakeTheaterById(id: string) {
+
+  const movieId = id;
+  const theaters: any = Object.values(THEATER);
+  const theater = theaters.find(theater => theater.id == movieId);
+  return theater;
 }
 
 
