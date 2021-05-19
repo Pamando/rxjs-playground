@@ -1,0 +1,31 @@
+<p>overview works!</p>
+
+<div class="theater">
+  <ng-container *ngIf="theater">
+
+    <h2>{{theater?.name}}</h2>
+  </ng-container>
+
+<mat-form-field class="search-bar">
+
+  <input matInput  #searchInput autocomplete="off">
+
+</mat-form-field>
+
+  <table class="movie-table mat-elevation-z7" *ngIf="movies">
+
+    <thead>
+    <th>#</th>
+    <th>Title</th>
+    <th>Description</th>
+    </thead>
+
+    <tr *ngFor="let movie of movies">
+      <td class="seqno-cell">{{movie.id}}</td>
+      <td class="description-cell">{{movie.title}}</td>
+      <td class="description-cell">{{movie.description}}</td>
+    </tr>
+
+  </table>
+
+</div>
